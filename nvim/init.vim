@@ -16,9 +16,10 @@ Plug 'itchyny/lightline.vim'
 Plug 'mgee/lightline-bufferline'
 Plug 'maximbaz/lightline-ale'
 Plug 'sonph/onehalf', {'rtp': 'vim/'}
+Plug 'mhinz/vim-startify'
 " languages
-Plug 'fatih/vim-go'
-Plug 'zchee/deoplete-go', { 'do': 'make'}
+Plug 'fatih/vim-go', {'for': 'go' }
+Plug 'zchee/deoplete-go', {'do': 'make'}
 Plug 'HerringtonDarkholme/yats.vim'
 Plug 'mhartington/nvim-typescript', {'build': './install.sh'}
 call plug#end()
@@ -153,14 +154,24 @@ let g:lightline.component_type   = {
 set showtabline=2  " Show tabline
 set guioptions-=e  " Don't use GUI tabline
 
+" startify
+let g:startify_session_persistence = 1
+let g:startify_files_number = 10
+let g:startify_lists = [
+      \ { 'type': 'sessions',  'header': ['   Sessions']       },
+      \ { 'type': 'files',     'header': ['   Recent']         },
+      \ { 'type': 'commands',  'header': ['   Commands']       },
+      \ ]
+" \ { 'type': 'bookmarks', 'header': ['   Bookmarks']      },
+
 
 " GitGutter setup
 highlight clear SignColumn
-let g:gitgutter_sign_added = '·'
-let g:gitgutter_sign_modified = '·'
-let g:gitgutter_sign_removed = '·'
-let g:gitgutter_sign_removed_first_line = '·'
-let g:gitgutter_sign_modified_removed = '·'
+" let g:gitgutter_sign_added = '·'
+" let g:gitgutter_sign_modified = '·'
+" let g:gitgutter_sign_removed = '·'
+" let g:gitgutter_sign_removed_first_line = '·'
+" let g:gitgutter_sign_modified_removed = '·'
 
 " tagbar
 nmap <F9> :TagbarToggle<CR>
