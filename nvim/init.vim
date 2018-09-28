@@ -19,6 +19,8 @@ Plug 'sonph/onehalf', {'rtp': 'vim/'}
 " languages
 Plug 'fatih/vim-go'
 Plug 'zchee/deoplete-go', { 'do': 'make'}
+Plug 'HerringtonDarkholme/yats.vim'
+Plug 'mhartington/nvim-typescript', {'build': './install.sh'}
 call plug#end()
 let g:python2_host_prog = '/usr/local/bin/python'
 let g:python3_host_prog = '/usr/local/bin/python3'
@@ -28,7 +30,7 @@ scriptencoding utf8
 set noerrorbells
 set splitbelow
 set splitright
-set clipboard+=unnamed
+" set clipboard+=unnamed
 set completeopt-=preview
 set noshowmode
 set ruler
@@ -221,6 +223,8 @@ nmap <silent> <leader>p <Plug>(ale_previous_wrap)
 augroup fmt
   autocmd!
   autocmd BufWritePre *.go Neoformat
+  autocmd BufWritePre *.ts Neoformat
+  autocmd BufWritePre *.tsx Neoformat
 augroup END
 let g:neoformat_enabled_javascript = ['prettier']
 let g:neoformat_enabled_typescript = ['prettier']
@@ -235,7 +239,8 @@ au FileType go set noexpandtab
 au FileType go set shiftwidth=4
 au FileType go set softtabstop=4
 au FileType go set tabstop=4
-au FileType go nmap <F12> <Plug>(go-def)
+au FileType go nmap <C-n><C-g> :GoDef<CR>
+au FileType go nmap <C-n><C-r> :GoReferrers<CR>
 let g:go_list_type = "quickfix"
 let g:go_highlight_build_constraints = 1
 let g:go_highlight_extra_types = 1
@@ -248,4 +253,10 @@ let g:go_highlight_types = 1
 let g:go_fmt_autosave = 0
 
 
+" typescript
+let b:ale_linters = {'typescript': ['tslint']}
+au FileType typescript nmap <C-n><C-g> :TSDef<CR>
+au FileType typescript nmap <C-n><C-r> :TSRefs<CR>
+au FileType typescript.tsx nmap <C-n><C-g> :TSDef<CR>
+au FileType typescript.tsx nmap <C-n><C-r> :TSRefs<CR>
 
