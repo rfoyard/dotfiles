@@ -23,6 +23,7 @@ Plug 'fatih/vim-go', {'for': 'go' }
 Plug 'zchee/deoplete-go', {'do': 'make'}
 Plug 'HerringtonDarkholme/yats.vim'
 Plug 'mhartington/nvim-typescript', {'build': './install.sh'}
+Plug 'copy/deoplete-ocaml'
 call plug#end()
 let g:python2_host_prog = '/usr/local/bin/python'
 let g:python3_host_prog = '/usr/local/bin/python3'
@@ -107,7 +108,7 @@ set ignorecase
 " ack
 let g:ackprg = 'ag --vimgrep'
 cnoreabbrev Ack Ack!
-nnoremap <C-n><C-f> :Ack!<CR>
+nnoremap <Leader>nf :Ack! 
 
 " easymotion
 map <leader>e <Plug>(easymotion-prefix)
@@ -166,7 +167,6 @@ let g:startify_session_before_save = [
   \ 'silent! NERDTreeTabsClose'
   \ ]
 
-
 " GitGutter setup
 highlight clear SignColumn
 " let g:gitgutter_sign_added = '·'
@@ -176,7 +176,7 @@ highlight clear SignColumn
 " let g:gitgutter_sign_modified_removed = '·'
 
 " tagbar
-nmap <F9> :TagbarToggle<CR>
+nmap <Leader>t :TagbarToggle<CR>
 let g:tagbar_type_go = {
 	\ 'ctagstype' : 'go',
 	\ 'kinds'     : [
@@ -208,8 +208,7 @@ let g:tagbar_type_go = {
 " nerdtree
 let NERDTreeHijackNetrw = 0
 let NERDTreeIgnore=['node_modules']
-nnoremap <F8> :NERDTreeToggle<CR>
-autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
+nnoremap <Leader>o :NERDTreeToggle<CR>
 
 " fzf
 let g:fzf_buffers_jump = 1
@@ -219,7 +218,6 @@ nnoremap <Leader>: :History<CR>
 
 " fugitive
 nnoremap <leader>g :<C-u>Gstatus<CR>
-
 
 " ale
 let g:ale_sign_error = '⨉'
@@ -234,29 +232,36 @@ let g:ale_sign_column_always = 1
 " let g:ale_open_list = 1
 nmap <silent> <leader>n <Plug>(ale_next_wrap)
 nmap <silent> <leader>p <Plug>(ale_previous_wrap)
+let b:ale_linters = {
+  \ 'ocaml': ['merlin'],
+  \ 'typescript': ['tslint'],
+  \ 'typescript.tsx': ['tslint']
+  \ }
 
 " neoformat
 augroup fmt
   autocmd!
   autocmd BufWritePre *.go Neoformat
-  autocmd BufWritePre *.ts Neoformat
-  autocmd BufWritePre *.tsx Neoformat
+  autocmd BufWritePre *.ts,*.tsx Neoformat
+  autocmd BufWritePre *.ml,*.mli Neoformat
 augroup END
 let g:neoformat_enabled_javascript = ['prettier']
 let g:neoformat_enabled_typescript = ['prettier']
+let g:neoformat_enabled_ocaml = ['ocamlformat']
 
 " custom syntax
 au BufNewFile,BufRead *.md set ft=markdown
 au BufNewFile,BufRead *.cuh set ft=cuda
 au BufNewFile,BufRead *.go set ft=go
 
+" ------------- languages -------------
 " golang
 au FileType go set noexpandtab
 au FileType go set shiftwidth=4
 au FileType go set softtabstop=4
 au FileType go set tabstop=4
-au FileType go nmap <C-n><C-d> :GoDef<CR>
-au FileType go nmap <C-n><C-r> :GoReferrers<CR>
+au FileType go nmap <Leader>nd <Plug>(go-def-split)
+au FileType go nmap <Leader>nr :GoReferrers<CR>
 let g:go_list_type = "quickfix"
 let g:go_highlight_build_constraints = 1
 let g:go_highlight_extra_types = 1
@@ -268,11 +273,16 @@ let g:go_highlight_structs = 1
 let g:go_highlight_types = 1
 let g:go_fmt_autosave = 0
 
-
 " typescript
-let b:ale_linters = {'typescript': ['tslint'], 'typescript.tsx': ['tslint']}
-au FileType typescript nmap <C-n><C-d> :TSDef<CR>
-au FileType typescript nmap <C-n><C-r> :TSRefs<CR>
-au FileType typescript.tsx nmap <C-n><C-d> :TSDef<CR>
-au FileType typescript.tsx nmap <C-n><C-r> :TSRefs<CR>
+au FileType typescript,typescript.tsx nmap <Leader>nd :TSDefPreview<CR>
+au FileType typescript,typescript.tsx nmap <Leader>nt :TSType<CR>
+au FileType typescript,typescript.tsx nmap <Leader>nr :TSRefs<CR>
+
+" ocaml
+let g:opamshare = substitute(system('opam config var share'),'\n$','','''')
+execute "set rtp+=" . g:opamshare . "/merlin/vim"
+let g:merlin_disable_default_keybindings = 1
+let g:merlin_split_method = "horizontal" " use never for no split
+au FileType ocaml nmap <Leader>nd :MerlinLocate<CR>
+au FileType ocaml nmap <Leader>nt :MerlinTypeOf<CR>
 
