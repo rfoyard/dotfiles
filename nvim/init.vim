@@ -17,6 +17,7 @@ Plug 'mgee/lightline-bufferline'
 Plug 'maximbaz/lightline-ale'
 Plug 'sonph/onehalf', {'rtp': 'vim/'}
 Plug 'mhinz/vim-startify'
+Plug 'qpkorr/vim-bufkill'
 " languages
 Plug 'fatih/vim-go', {'for': 'go' }
 Plug 'zchee/deoplete-go', {'do': 'make'}
@@ -121,7 +122,7 @@ let g:lightline = {
   \              [ 'gitbranch', 'readonly', 'filename', 'modified' ],
   \              [ 'tagbar' ]
   \     ],
-  \     'right': [[ 'linter_checking', 'linter_errors', 'linter_warnings', 'linter_ok' ],
+  \     'right': [[ 'linter_errors', 'linter_warnings' ],
   \              [ 'lineinfo' ],
   \              [ 'fileformat', 'fileencoding', 'filetype']]
   \   },
@@ -139,17 +140,13 @@ let g:lightline.tabline = {
   \ }
 let g:lightline.component_expand = {
   \   'buffers': 'lightline#bufferline#buffers',
-  \   'linter_checking': 'lightline#ale#checking',
   \   'linter_warnings': 'lightline#ale#warnings',
-  \   'linter_errors': 'lightline#ale#errors',
-  \   'linter_ok': 'lightline#ale#ok',
+  \   'linter_errors': 'lightline#ale#errors'
   \  }
 let g:lightline.component_type   = {
   \   'buffers': 'tabsel',
-  \   'linter_checking': 'left',
   \   'linter_warnings': 'warning',
-  \   'linter_errors': 'error',
-  \   'linter_ok': 'left',
+  \   'linter_errors': 'error'
   \  }
 set showtabline=2  " Show tabline
 set guioptions-=e  " Don't use GUI tabline
@@ -158,11 +155,15 @@ set guioptions-=e  " Don't use GUI tabline
 let g:startify_session_persistence = 1
 let g:startify_files_number = 10
 let g:startify_lists = [
-      \ { 'type': 'sessions',  'header': ['   Sessions']       },
-      \ { 'type': 'files',     'header': ['   Recent']         },
-      \ { 'type': 'commands',  'header': ['   Commands']       },
-      \ ]
+  \ { 'type': 'sessions',  'header': ['   Sessions']       },
+  \ { 'type': 'files',     'header': ['   Recent']         },
+  \ { 'type': 'commands',  'header': ['   Commands']       },
+  \ ]
 " \ { 'type': 'bookmarks', 'header': ['   Bookmarks']      },
+let g:startify_session_before_save = [
+  \ 'echo "Cleaning up before saving.."',
+  \ 'silent! NERDTreeTabsClose'
+  \ ]
 
 
 " GitGutter setup
@@ -204,7 +205,10 @@ let g:tagbar_type_go = {
 \ }
 
 " nerdtree
+let NERDTreeHijackNetrw = 0
+let NERDTreeIgnore=['node_modules']
 nnoremap <F8> :NERDTreeToggle<CR>
+autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 
 " fzf
 let g:fzf_buffers_jump = 1
@@ -265,7 +269,7 @@ let g:go_fmt_autosave = 0
 
 
 " typescript
-let b:ale_linters = {'typescript': ['tslint']}
+let b:ale_linters = {'typescript': ['tslint'], 'typescript.tsx': ['tslint']}
 au FileType typescript nmap <C-n><C-g> :TSDef<CR>
 au FileType typescript nmap <C-n><C-r> :TSRefs<CR>
 au FileType typescript.tsx nmap <C-n><C-g> :TSDef<CR>
