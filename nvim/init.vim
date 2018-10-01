@@ -107,6 +107,7 @@ set ignorecase
 " ack
 let g:ackprg = 'ag --vimgrep'
 cnoreabbrev Ack Ack!
+nnoremap <C-n><C-f> :Ack!<CR>
 
 " easymotion
 map <leader>e <Plug>(easymotion-prefix)
@@ -254,7 +255,7 @@ au FileType go set noexpandtab
 au FileType go set shiftwidth=4
 au FileType go set softtabstop=4
 au FileType go set tabstop=4
-au FileType go nmap <C-n><C-g> :GoDef<CR>
+au FileType go nmap <C-n><C-d> :GoDef<CR>
 au FileType go nmap <C-n><C-r> :GoReferrers<CR>
 let g:go_list_type = "quickfix"
 let g:go_highlight_build_constraints = 1
@@ -270,8 +271,8 @@ let g:go_fmt_autosave = 0
 
 " typescript
 let b:ale_linters = {'typescript': ['tslint'], 'typescript.tsx': ['tslint']}
-au FileType typescript nmap <C-n><C-g> :TSDef<CR>
+au FileType typescript nmap <C-n><C-d> :TSDef<CR>
 au FileType typescript nmap <C-n><C-r> :TSRefs<CR>
-au FileType typescript.tsx nmap <C-n><C-g> :TSDef<CR>
+au FileType typescript.tsx nmap <C-n><C-d> :TSDef<CR>
 au FileType typescript.tsx nmap <C-n><C-r> :TSRefs<CR>
 
