@@ -2,6 +2,9 @@ Custom bindings:
 <Leader>,    fzf buffer
 <Leader>;    fzf file
 <Leader>:    fzf history
+<Leader>g,   git files from git status
+<Leader>g;   git files from git ls-files
+<Leader>gg   git status
 <Leader>t    toggle tabbar
 <Leader>o    toggle nerdtree
 <Leader>nf   search with Ack

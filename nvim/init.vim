@@ -216,8 +216,10 @@ nnoremap <Leader>, :Buffer<CR>
 nnoremap <Leader>; :Files<CR>
 nnoremap <Leader>: :History<CR>
 
-" fugitive
-nnoremap <leader>g :<C-u>Gstatus<CR>
+" git (fugitive and fzf commands)
+nnoremap <leader>gg :<C-u>Gstatus<CR>
+nnoremap <leader>g, :GFiles?<CR>
+nnoremap <leader>g; :GFiles<CR>
 
 " ale
 let g:ale_sign_error = '⨉'
