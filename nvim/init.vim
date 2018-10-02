@@ -15,7 +15,7 @@ Plug 'w0rp/ale'
 Plug 'itchyny/lightline.vim'
 Plug 'mgee/lightline-bufferline'
 Plug 'maximbaz/lightline-ale'
-Plug 'sonph/onehalf', {'rtp': 'vim/'}
+Plug 'joshdick/onedark.vim'
 Plug 'mhinz/vim-startify'
 Plug 'qpkorr/vim-bufkill'
 " languages
@@ -65,7 +65,7 @@ if exists('+termguicolors')
   let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
   set termguicolors
 endif
-colorscheme onehalfdark
+colorscheme onedark
 set background=dark
 set foldcolumn=0
 set showtabline=0
@@ -78,7 +78,7 @@ set scrolloff=5
 set showcmd
 set textwidth=80
 set fillchars=vert:\│,eob:⌁
-set listchars=tab:\|\ ,
+set listchars=tab:\|\ ,trail:·,eol:¬,nbsp:_,space:·
 set list
 hi clear IncSearch
 hi link IncSearch StatusLine
@@ -118,7 +118,7 @@ hi EasyMotionTarget2Second ctermfg=1 cterm=underline
 
 " lightline
 let g:lightline = {
-  \   'colorscheme': 'onehalfdark',
+  \   'colorscheme': 'onedark',
   \   'active': {
   \     'left':[ [ 'mode', 'paste' ],
   \              [ 'gitbranch', 'readonly', 'filename', 'modified' ],

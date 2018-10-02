@@ -1,3 +1,0 @@
-let g:netrw_dirhistmax  =10
-let g:netrw_dirhist_cnt =1
-let g:netrw_dirhist_1='/Volumes/osx-data/romain/Development/billquiz/react-native/triviapix/node_modules/@babel'
