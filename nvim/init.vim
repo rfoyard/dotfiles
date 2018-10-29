@@ -221,6 +221,13 @@ nnoremap <leader>gg :<C-u>Gstatus<CR>
 nnoremap <leader>g, :GFiles?<CR>
 nnoremap <leader>g; :GFiles<CR>
 
+" enter insert mode in terminal (useful for fugitive)
+augroup nvim_term
+  au!
+  au TermOpen * startinsert
+  au TermClose * stopinsert
+augroup END
+
 " ale
 let g:ale_sign_error = '⨉'
 let g:ale_sign_warning = '⚠'
