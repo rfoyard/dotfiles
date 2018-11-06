@@ -66,6 +66,7 @@ if exists('+termguicolors')
   set termguicolors
 endif
 colorscheme onedark
+let g:onedark_terminal_italics=1
 set background=dark
 set foldcolumn=0
 set showtabline=0
