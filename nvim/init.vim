@@ -282,6 +282,7 @@ let g:go_highlight_operators = 1
 let g:go_highlight_structs = 1
 let g:go_highlight_types = 1
 let g:go_fmt_autosave = 0
+let g:go_gocode_propose_source = 0
 
 " typescript
 au FileType typescript,typescript.tsx nmap <Leader>nd :TSDefPreview<CR>
