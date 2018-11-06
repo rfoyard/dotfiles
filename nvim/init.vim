@@ -119,7 +119,7 @@ hi EasyMotionTarget2Second ctermfg=1 cterm=underline
 
 " lightline
 let g:lightline = {
-  \   'colorscheme': 'onedark',
+  \   'colorscheme': 'darcula',
   \   'active': {
   \     'left':[ [ 'mode', 'paste' ],
   \              [ 'gitbranch', 'readonly', 'filename', 'modified' ],
