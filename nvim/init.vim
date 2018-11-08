@@ -236,8 +236,8 @@ let g:ale_statusline_format = ['⨉ %d', '⚠ %d', '']
 let g:ale_lint_on_text_changed = 0
 let g:ale_lint_on_save = 1
 let g:ale_lint_on_enter = 1
-let g:ale_set_loclist = 0
-let g:ale_set_quickfix = 1
+let g:ale_set_loclist = 1
+let g:ale_set_quickfix = 0
 let g:ale_sign_column_always = 1
 " let g:ale_open_list = 1
 nmap <silent> <leader>n <Plug>(ale_next_wrap)
@@ -272,7 +272,7 @@ au FileType go set softtabstop=4
 au FileType go set tabstop=4
 au FileType go nmap <Leader>nd <Plug>(go-def-split)
 au FileType go nmap <Leader>nr :GoReferrers<CR>
-let g:go_list_type = "quickfix"
+" let g:go_list_type = "quickfix"
 let g:go_highlight_build_constraints = 1
 let g:go_highlight_extra_types = 1
 let g:go_highlight_fields = 1
