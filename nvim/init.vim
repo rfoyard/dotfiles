@@ -90,6 +90,10 @@ hi link Search StatusLine
 nnoremap j gj
 nnoremap k gk
 
+" terminal remapping, reset fzf behavior on escape
+tnoremap <Esc> <C-\><C-n>
+autocmd! FileType fzf tnoremap <buffer> <Esc> <c-c>
+
 " syntax highlighting
 syntax on
 filetype plugin indent on
