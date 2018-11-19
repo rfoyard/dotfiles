@@ -48,6 +48,7 @@ set noswapfile
 set hlsearch
 set incsearch
 set backspace=2
+set hidden
 set undolevels=1000
 set noeol
 set cursorline
