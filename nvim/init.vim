@@ -16,6 +16,7 @@ Plug 'itchyny/lightline.vim'
 Plug 'mgee/lightline-bufferline'
 Plug 'maximbaz/lightline-ale'
 Plug 'joshdick/onedark.vim'
+Plug 'morhetz/gruvbox'
 Plug 'mhinz/vim-startify'
 Plug 'qpkorr/vim-bufkill'
 " languages
@@ -66,9 +67,18 @@ if exists('+termguicolors')
   let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
   set termguicolors
 endif
-colorscheme onedark
-let g:onedark_terminal_italics=1
 set background=dark
+let g:gruvbox_italic=1
+let g:gruvbox_invert_selection=0
+let g:gruvbox_invert_signs=0
+let g:gruvbox_improved_strings=0
+let g:gruvbox_improved_warnings=1
+let g:gruvbox_undercurl=1
+let g:gruvbox_contrast_dark="medium"
+colorscheme gruvbox
+" colorscheme onedark
+" let g:onedark_terminal_italics=1
+" set background=dark
 set foldcolumn=0
 set showtabline=0
 set autoindent
@@ -124,7 +134,7 @@ hi EasyMotionTarget2Second ctermfg=1 cterm=underline
 
 " lightline
 let g:lightline = {
-  \   'colorscheme': 'darcula',
+  \   'colorscheme': 'gruvbox',
   \   'active': {
   \     'left':[ [ 'mode', 'paste' ],
   \              [ 'gitbranch', 'readonly', 'filename', 'modified' ],
