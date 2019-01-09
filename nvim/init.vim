@@ -19,6 +19,7 @@ Plug 'joshdick/onedark.vim'
 Plug 'morhetz/gruvbox'
 Plug 'mhinz/vim-startify'
 Plug 'qpkorr/vim-bufkill'
+Plug 'benmills/vimux'
 " languages
 Plug 'fatih/vim-go', {'for': 'go' }
 Plug 'zchee/deoplete-go', {'do': 'make'}
@@ -182,6 +183,14 @@ let g:startify_session_before_save = [
   \ 'echo "Cleaning up before saving.."',
   \ 'silent! NERDTreeTabsClose'
   \ ]
+
+" vimux
+map <Leader>vp :VimuxPromptCommand<CR>
+map <Leader>vl :VimuxRunLastCommand<CR>
+map <Leader>vi :VimuxInspectRunner<CR>
+map <Leader>vc :VimuxInterruptRunner<CR>
+map <Leader>vz :VimuxZoomRunner<CR>
+
 
 " GitGutter setup
 highlight clear SignColumn
