@@ -268,6 +268,7 @@ augroup nvim_term
 augroup END
 
 " ale
+let g:ale_linters_explicit = 1
 let g:ale_sign_error = '⨉'
 let g:ale_sign_warning = '⚠'
 let g:ale_statusline_format = ['⨉ %d', '⚠ %d', '']
@@ -282,6 +283,7 @@ nmap <silent> <leader>n <Plug>(ale_next_wrap)
 nmap <silent> <leader>p <Plug>(ale_previous_wrap)
 let b:ale_linters = {
   \ 'ocaml': ['merlin'],
+  \ 'go': ['gofmt', 'golint', 'go vet'],
   \ 'typescript': ['tslint'],
   \ 'typescript.tsx': ['tslint']
   \ }
@@ -289,9 +291,7 @@ let b:ale_linters = {
 " neoformat
 augroup fmt
   autocmd!
-  autocmd BufWritePre *.go Neoformat
-  autocmd BufWritePre *.ts,*.tsx Neoformat
-  autocmd BufWritePre *.ml,*.mli Neoformat
+  autocmd BufWritePre * try | undojoin | Neoformat | catch /^Vim\%((\a\+)\)\=:E790/ | endtry
 augroup END
 let g:neoformat_enabled_javascript = ['prettier']
 let g:neoformat_enabled_typescript = ['prettier']
