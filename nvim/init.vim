@@ -282,7 +282,7 @@ let g:ale_sign_column_always = 1
 " let g:ale_open_list = 1
 nmap <silent> <leader>n <Plug>(ale_next_wrap)
 nmap <silent> <leader>p <Plug>(ale_previous_wrap)
-let b:ale_linters = {
+let g:ale_linters = {
   \ 'ocaml': ['merlin'],
   \ 'go': ['gofmt', 'golint', 'go vet'],
   \ 'javascript': ['eslint'],
