@@ -284,7 +284,7 @@ nmap <silent> <leader>n <Plug>(ale_next_wrap)
 nmap <silent> <leader>p <Plug>(ale_previous_wrap)
 let g:ale_linters = {
   \ 'ocaml': ['merlin'],
-  \ 'go': ['gofmt', 'golint', 'go vet'],
+  \ 'go': ['gofmt', 'golint', 'govet'],
   \ 'javascript': ['eslint'],
   \ 'typescript': ['tslint'],
   \ 'typescript.tsx': ['tslint'],
