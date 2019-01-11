@@ -344,10 +344,12 @@ au FileType typescript,typescript.tsx nmap <Leader>nt :TSType<CR>
 au FileType typescript,typescript.tsx nmap <Leader>nr :TSRefs<CR>
 
 " ocaml
-let g:opamshare = substitute(system('opam config var share'),'\n$','','''')
-execute "set rtp+=" . g:opamshare . "/merlin/vim"
-let g:merlin_disable_default_keybindings = 1
-let g:merlin_split_method = "horizontal" " use never for no split
-au FileType ocaml nmap <Leader>nd :MerlinLocate<CR>
-au FileType ocaml nmap <Leader>nt :MerlinTypeOf<CR>
+if executable('opam')
+  let g:opamshare = substitute(system('opam config var share'),'\n$','','''')
+  execute "set rtp+=" . g:opamshare . "/merlin/vim"
+  let g:merlin_disable_default_keybindings = 1
+  let g:merlin_split_method = "horizontal" " use never for no split
+  au FileType ocaml nmap <Leader>nd :MerlinLocate<CR>
+  au FileType ocaml nmap <Leader>nt :MerlinTypeOf<CR>
+endif
 
