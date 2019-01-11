@@ -26,6 +26,10 @@ Plug 'zchee/deoplete-go', {'do': 'make'}
 Plug 'HerringtonDarkholme/yats.vim'
 Plug 'mhartington/nvim-typescript', {'build': './install.sh'}
 Plug 'copy/deoplete-ocaml'
+Plug 'autozimu/LanguageClient-neovim', {
+    \ 'branch': 'next',
+    \ 'do': 'bash install.sh',
+    \ }
 call plug#end()
 let g:python2_host_prog = '/usr/local/bin/python'
 let g:python3_host_prog = '/usr/local/bin/python3'
@@ -285,8 +289,14 @@ let b:ale_linters = {
   \ 'ocaml': ['merlin'],
   \ 'go': ['gofmt', 'golint', 'go vet'],
   \ 'typescript': ['tslint'],
-  \ 'typescript.tsx': ['tslint']
+  \ 'typescript.tsx': ['tslint'],
+  \ 'cpp': ['clangd'],
   \ }
+let g:ale_pattern_options = {
+  \   '\.h$': {'ale_linters': {'cpp': ['clangd']}},
+  \   '\.hpp$': {'ale_linters': {'cpp': ['clangd']}},
+  \   '\.hxx$': {'ale_linters': {'cpp': ['clangd']}},
+  \}
 
 " neoformat
 augroup fmt
@@ -303,6 +313,12 @@ au BufNewFile,BufRead *.cuh set ft=cuda
 au BufNewFile,BufRead *.go set ft=go
 
 " ------------- languages -------------
+"  language servers
+let g:LanguageClient_diagnosticsEnable = 0
+let g:LanguageClient_serverCommands = {
+  \ 'cpp': ['clangd'],
+  \}
+
 " golang
 au FileType go set noexpandtab
 au FileType go set shiftwidth=4
