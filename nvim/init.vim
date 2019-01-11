@@ -15,17 +15,12 @@ Plug 'w0rp/ale'
 Plug 'itchyny/lightline.vim'
 Plug 'mgee/lightline-bufferline'
 Plug 'maximbaz/lightline-ale'
-Plug 'joshdick/onedark.vim'
 Plug 'morhetz/gruvbox'
 Plug 'mhinz/vim-startify'
 Plug 'qpkorr/vim-bufkill'
 Plug 'benmills/vimux'
 " languages
-Plug 'fatih/vim-go', {'for': 'go' }
-Plug 'zchee/deoplete-go', {'do': 'make'}
 Plug 'HerringtonDarkholme/yats.vim'
-Plug 'mhartington/nvim-typescript', {'build': './install.sh'}
-Plug 'copy/deoplete-ocaml'
 Plug 'autozimu/LanguageClient-neovim', {
     \ 'branch': 'next',
     \ 'do': 'bash install.sh',
@@ -118,6 +113,8 @@ set nomodeline
 " auto completion
 inoremap <silent><expr><tab> pumvisible() ? "\<c-n>" : "\<tab>"
 inoremap <silent><expr><s-tab> pumvisible() ? "\<c-p>" : "\<s-tab>"
+inoremap <silent><expr><C-j> pumvisible() ? "\<c-n>" : "\<tab>"
+inoremap <silent><expr><C-k> pumvisible() ? "\<c-p>" : "\<s-tab>"
 let g:deoplete#enable_at_startup = 1
 let g:deoplete#enable_smart_case = 1
 let g:deoplete#auto_complete_start_length = 1
@@ -244,6 +241,8 @@ let g:fzf_buffers_jump = 1
 nnoremap <Leader>, :Buffer<CR>
 nnoremap <Leader>; :Files<CR>
 nnoremap <Leader>: :History<CR>
+nnoremap <leader>g, :GFiles?<CR>
+nnoremap <leader>g; :GFiles<CR>
 let g:fzf_colors =
 \ { 'fg':      ['fg', 'Normal'],
   \ 'bg':      ['bg', 'Normal'],
@@ -259,10 +258,8 @@ let g:fzf_colors =
   \ 'spinner': ['fg', 'Label'],
   \ 'header':  ['fg', 'Comment'] }
 
-" git (fugitive and fzf commands)
+" fugitive
 nnoremap <leader>gg :<C-u>Gstatus<CR>
-nnoremap <leader>g, :GFiles?<CR>
-nnoremap <leader>g; :GFiles<CR>
 
 " enter insert mode in terminal (useful for fugitive)
 augroup nvim_term
@@ -288,9 +285,11 @@ nmap <silent> <leader>p <Plug>(ale_previous_wrap)
 let b:ale_linters = {
   \ 'ocaml': ['merlin'],
   \ 'go': ['gofmt', 'golint', 'go vet'],
+  \ 'javascript': ['eslint'],
   \ 'typescript': ['tslint'],
   \ 'typescript.tsx': ['tslint'],
   \ 'cpp': ['clangd'],
+  \ 'c': ['clangd'],
   \ }
 let g:ale_pattern_options = {
   \   '\.h$': {'ale_linters': {'cpp': ['clangd']}},
@@ -303,9 +302,12 @@ augroup fmt
   autocmd!
   autocmd BufWritePre * try | undojoin | Neoformat | catch /^Vim\%((\a\+)\)\=:E790/ | endtry
 augroup END
+let g:neoformat_enabled_go = ['goimports', 'gofmt']
 let g:neoformat_enabled_javascript = ['prettier']
 let g:neoformat_enabled_typescript = ['prettier']
 let g:neoformat_enabled_ocaml = ['ocamlformat']
+let g:neoformat_enabled_cpp = ['clangformat']
+let g:neoformat_enabled_c = ['clangformat']
 
 " custom syntax
 au BufNewFile,BufRead *.md set ft=markdown
@@ -314,8 +316,16 @@ au BufNewFile,BufRead *.go set ft=go
 
 " ------------- languages -------------
 "  language servers
+nnoremap <silent> <Leader>n, :call LanguageClient_contextMenu()<CR>
+nnoremap <silent> <Leader>nh :call LanguageClient#textDocument_hover()<CR>
+nnoremap <silent> <Leader>nd :call LanguageClient#textDocument_definition()<CR>
+nnoremap <silent> <Leader>nr :call LanguageClient#textDocument_references()<CR>
 let g:LanguageClient_diagnosticsEnable = 0
 let g:LanguageClient_serverCommands = {
+  \ 'ocaml': ['ocaml-language-server', '--stdio'],
+  \ 'typescript': ['typescript-language-server', '--stdio'],
+  \ 'typescript.tsx': ['typescript-language-server', '--stdio'],
+  \ 'go': ['bingo', '--mode', 'stdio', '--logfile', '/tmp/lsp-bingo.log'],
   \ 'cpp': ['clangd'],
   \}
 
@@ -324,32 +334,4 @@ au FileType go set noexpandtab
 au FileType go set shiftwidth=4
 au FileType go set softtabstop=4
 au FileType go set tabstop=4
-au FileType go nmap <Leader>nd <Plug>(go-def-split)
-au FileType go nmap <Leader>nr :GoReferrers<CR>
-" let g:go_list_type = "quickfix"
-let g:go_highlight_build_constraints = 1
-let g:go_highlight_extra_types = 1
-let g:go_highlight_fields = 1
-let g:go_highlight_functions = 1
-let g:go_highlight_methods = 1
-let g:go_highlight_operators = 1
-let g:go_highlight_structs = 1
-let g:go_highlight_types = 1
-let g:go_fmt_autosave = 0
-let g:go_gocode_propose_source = 0
-
-" typescript
-au FileType typescript,typescript.tsx nmap <Leader>nd :TSDefPreview<CR>
-au FileType typescript,typescript.tsx nmap <Leader>nt :TSType<CR>
-au FileType typescript,typescript.tsx nmap <Leader>nr :TSRefs<CR>
-
-" ocaml
-if executable('opam')
-  let g:opamshare = substitute(system('opam config var share'),'\n$','','''')
-  execute "set rtp+=" . g:opamshare . "/merlin/vim"
-  let g:merlin_disable_default_keybindings = 1
-  let g:merlin_split_method = "horizontal" " use never for no split
-  au FileType ocaml nmap <Leader>nd :MerlinLocate<CR>
-  au FileType ocaml nmap <Leader>nt :MerlinTypeOf<CR>
-endif
 
