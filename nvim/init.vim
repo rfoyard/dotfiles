@@ -235,12 +235,12 @@ nnoremap <Leader>o :NERDTreeToggle<CR>
 
 " fzf
 let g:fzf_buffers_jump = 1
-nnoremap <Leader>, :Buffer<CR>
-nnoremap <Leader>; :Files<CR>
-nnoremap <Leader>: :History<CR>
-nnoremap <leader>g, :GFiles?<CR>
-nnoremap <leader>g; :GFiles<CR>
-nnoremap <Leader>f :Ag<CR>
+let g:fzf_command_prefix = 'Fz'
+nnoremap <Leader>, :FzBuffer<CR>
+nnoremap <Leader>; :FzFiles<CR>
+nnoremap <Leader>: :FzHistory<CR>
+nnoremap <leader>g, :FzGFiles?<CR>
+nnoremap <leader>g; :FzGFiles<CR>
 let g:fzf_colors =
 \ { 'fg':      ['fg', 'Normal'],
   \ 'bg':      ['bg', 'Normal'],
@@ -256,7 +256,7 @@ let g:fzf_colors =
   \ 'spinner': ['fg', 'Label'],
   \ 'header':  ['fg', 'Comment'] }
 " custom Ag command for fzf
-function! FzfAg(args)
+function! CustomFzfAg(args)
   let l:prepargs = empty(a:args) ? expand("<cword>") : a:args . join(a:000, ' ')
   if l:prepargs == ""
     echo "No regular expression found."
@@ -264,7 +264,11 @@ function! FzfAg(args)
   endif
   call fzf#vim#ag(l:prepargs)
 endfunction
-command! -bang -nargs=* Ag call FzfAg(<q-args>)
+nnoremap <Leader>f :Ag<CR>
+command! -bang -nargs=* Ag call CustomFzfAg(<q-args>)
+command! -bang -nargs=* FzAg call CustomFzfAg(<q-args>)
+command! -bang FzCommits call fzf#vim#commits({'options': '--no-preview'}, <bang>0)
+command! -bang FzBCommits call fzf#vim#buffer_commits({'options': '--no-preview'}, <bang>0)
 
 " fugitive
 nnoremap <leader>gg :<C-u>Gstatus<CR>
