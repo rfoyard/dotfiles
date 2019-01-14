@@ -8,7 +8,6 @@ Plug 'tpope/vim-fugitive'
 Plug 'majutsushi/tagbar'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
-Plug 'mileszs/ack.vim'
 Plug 'scrooloose/nerdtree', {'on':  'NERDTreeToggle'}
 Plug 'w0rp/ale'
 Plug 'itchyny/lightline.vim'
@@ -126,11 +125,6 @@ set shortmess+=c
 " search
 set ignorecase
 
-" ack
-let g:ackprg = 'ag --vimgrep'
-cnoreabbrev Ack Ack!
-nnoremap <Leader>nf :Ack! 
-
 " easymotion
 map <leader>e <Plug>(easymotion-prefix)
 hi EasyMotionTarget ctermfg=1 cterm=bold,underline
@@ -246,6 +240,7 @@ nnoremap <Leader>; :Files<CR>
 nnoremap <Leader>: :History<CR>
 nnoremap <leader>g, :GFiles?<CR>
 nnoremap <leader>g; :GFiles<CR>
+nnoremap <Leader>f :Ag<CR>
 let g:fzf_colors =
 \ { 'fg':      ['fg', 'Normal'],
   \ 'bg':      ['bg', 'Normal'],
@@ -260,6 +255,16 @@ let g:fzf_colors =
   \ 'marker':  ['fg', 'Keyword'],
   \ 'spinner': ['fg', 'Label'],
   \ 'header':  ['fg', 'Comment'] }
+" custom Ag command for fzf
+function! FzfAg(args)
+  let l:prepargs = empty(a:args) ? expand("<cword>") : a:args . join(a:000, ' ')
+  if l:prepargs == ""
+    echo "No regular expression found."
+    return
+  endif
+  call fzf#vim#ag(l:prepargs)
+endfunction
+command! -bang -nargs=* Ag call FzfAg(<q-args>)
 
 " fugitive
 nnoremap <leader>gg :<C-u>Gstatus<CR>
