@@ -1,6 +1,5 @@
 " Plugins
 call plug#begin('~/.vim/plugged')
-Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 Plug 'sbdchd/neoformat'
 Plug 'airblade/vim-gitgutter'
 Plug 'easymotion/vim-easymotion'
@@ -19,6 +18,12 @@ Plug 'morhetz/gruvbox'
 Plug 'mhinz/vim-startify'
 Plug 'qpkorr/vim-bufkill'
 Plug 'benmills/vimux'
+" completion
+Plug 'roxma/nvim-yarp'
+Plug 'ncm2/ncm2'
+Plug 'ncm2/ncm2-bufword'
+Plug 'ncm2/ncm2-tmux'
+Plug 'ncm2/ncm2-path'
 " languages
 Plug 'HerringtonDarkholme/yats.vim'
 Plug 'autozimu/LanguageClient-neovim', {
@@ -35,7 +40,7 @@ set noerrorbells
 set splitbelow
 set splitright
 " set clipboard+=unnamed
-set completeopt-=preview
+set completeopt=noinsert,menuone,noselect
 set noshowmode
 set ruler
 set smartcase
@@ -115,10 +120,8 @@ inoremap <silent><expr><tab> pumvisible() ? "\<c-n>" : "\<tab>"
 inoremap <silent><expr><s-tab> pumvisible() ? "\<c-p>" : "\<s-tab>"
 inoremap <silent><expr><C-j> pumvisible() ? "\<c-n>" : "\<tab>"
 inoremap <silent><expr><C-k> pumvisible() ? "\<c-p>" : "\<s-tab>"
-let g:deoplete#enable_at_startup = 1
-let g:deoplete#enable_smart_case = 1
-let g:deoplete#auto_complete_start_length = 1
-let g:deoplete#auto_complete_delay = 50
+autocmd BufEnter * call ncm2#enable_for_buffer()
+set shortmess+=c
 
 " search
 set ignorecase
@@ -325,7 +328,7 @@ let g:LanguageClient_serverCommands = {
   \ 'ocaml': ['ocaml-language-server', '--stdio'],
   \ 'typescript': ['typescript-language-server', '--stdio'],
   \ 'typescript.tsx': ['typescript-language-server', '--stdio'],
-  \ 'go': ['bingo', '--mode', 'stdio', '--logfile', '/tmp/lsp-bingo.log'],
+  \ 'go': ['bingo', '--mode', 'stdio', '--logfile', '/tmp/lsp-bingo.log', '-disable-func-snippet', '-enable-global-cache'],
   \ 'cpp': ['clangd'],
   \}
 
