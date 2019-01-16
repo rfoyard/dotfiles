@@ -297,8 +297,8 @@ let g:ale_linters = {
   \ 'ocaml': ['merlin', 'ols'],
   \ 'go': ['gofmt', 'golint', 'govet'],
   \ 'javascript': ['eslint'],
-  \ 'typescript': ['tslint'],
-  \ 'typescript.tsx': ['tslint'],
+  \ 'typescript': ['tsserver', 'tslint'],
+  \ 'typescript.tsx': ['tsserver', 'tslint'],
   \ 'cpp': ['clangd'],
   \ 'c': ['clangd'],
   \ }
