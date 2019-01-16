@@ -80,9 +80,6 @@ let g:gruvbox_improved_warnings=1
 let g:gruvbox_undercurl=1
 let g:gruvbox_contrast_dark="medium"
 colorscheme gruvbox
-" colorscheme onedark
-" let g:onedark_terminal_italics=1
-" set background=dark
 set foldcolumn=0
 set showtabline=0
 set autoindent
@@ -236,6 +233,7 @@ nnoremap <Leader>o :NERDTreeToggle<CR>
 " fzf
 let g:fzf_buffers_jump = 1
 let g:fzf_command_prefix = 'Fz'
+let g:LanguageClient_fzfOptions = '-m'
 nnoremap <Leader>, :FzBuffer<CR>
 nnoremap <Leader>; :FzFiles<CR>
 nnoremap <Leader>: :FzHistory<CR>
@@ -295,6 +293,7 @@ let g:ale_sign_column_always = 1
 nmap <silent> <leader>n <Plug>(ale_next_wrap)
 nmap <silent> <leader>p <Plug>(ale_previous_wrap)
 let g:ale_linters = {
+  \ 'python': ['flake8', 'mypy'],
   \ 'ocaml': ['merlin', 'ols'],
   \ 'go': ['gofmt', 'golint', 'govet'],
   \ 'javascript': ['eslint'],
@@ -314,6 +313,7 @@ augroup fmt
   autocmd!
   autocmd BufWritePre * try | undojoin | Neoformat | catch /^Vim\%((\a\+)\)\=:E790/ | endtry
 augroup END
+let g:neoformat_enabled_python = ['yapf']
 let g:neoformat_enabled_go = ['goimports', 'gofmt']
 let g:neoformat_enabled_javascript = ['prettier']
 let g:neoformat_enabled_typescript = ['prettier']
@@ -334,6 +334,7 @@ nnoremap <silent> <Leader>nd :call LanguageClient#textDocument_definition()<CR>
 nnoremap <silent> <Leader>nr :call LanguageClient#textDocument_references()<CR>
 let g:LanguageClient_diagnosticsEnable = 0
 let g:LanguageClient_serverCommands = {
+  \ 'python': ['pyls'],
   \ 'ocaml': ['ocaml-language-server', '--stdio'],
   \ 'typescript': ['typescript-language-server', '--stdio'],
   \ 'typescript.tsx': ['typescript-language-server', '--stdio'],
@@ -346,4 +347,10 @@ au FileType go set noexpandtab
 au FileType go set shiftwidth=4
 au FileType go set softtabstop=4
 au FileType go set tabstop=4
+
+" ocaml
+if executable('opam')
+	let g:opamshare = substitute(system('opam config var share'),'\n$','','''')
+	execute "set rtp+=" . g:opamshare . "/merlin/vim"
+endif
 
