@@ -177,14 +177,9 @@ let g:startify_session_before_save = [
   \ 'silent! NERDTreeTabsClose'
   \ ]
 
-" vimux
-map <Leader>vp :VimuxPromptCommand<CR>
-map <Leader>vl :VimuxRunLastCommand<CR>
-map <Leader>vi :VimuxInspectRunner<CR>
-map <Leader>vc :VimuxInterruptRunner<CR>
-map <Leader>vz :VimuxZoomRunner<CR>
-function! VimuxSendSelectionFn()
-  echom "Call VimuxGetSelection"
+" vimux functions & commands
+let g:VimuxHeight = "33"
+function! s:getSelection()
   let reg_save = getreg('"')
   let regtype_save = getregtype('"')
   let cb_save = &clipboard
@@ -193,15 +188,46 @@ function! VimuxSendSelectionFn()
   let selection = getreg('"')
   " restore the selection, this only works if we don't change
   " pane selection buffer
-  silent normal! gv
+  " silent normal! gv
   call setreg('"', reg_save, regtype_save)
   let &clipboard = cb_save
   " add escape codes for bracketed paste mode
   let data = "\e[200~" . selection ."\e[201~\n"
-  call VimuxSendText(data)
+  return data
 endfunction
+function! s:getBuffer()
+  let l:winview = winsaveview()
+  let reg_save = getreg('"')
+  let regtype_save = getregtype('"')
+  let cb_save = &clipboard
+  set clipboard&
+  silent normal! ggVGy
+  let selection = getreg('"')
+  call setreg('"', reg_save, regtype_save)
+  let &clipboard = cb_save
+  call winrestview(l:winview)
+  " add escape codes for bracketed paste mode
+  let data = "\e[200~" . selection ."\e[201~\n"
+  return data
+endfunction
+command! -range=% -bar -nargs=* VimuxSendBuffer call VimuxSendText(s:getBuffer())
 command! -range=% -bar -nargs=* VimuxSendLine call VimuxSendText(getline(".") . "\n")
-command! -range=% -bar -nargs=* VimuxSendSelection call VimuxSendSelectionFn()
+command! -range=% -bar -nargs=* VimuxSendSelection call VimuxSendText(s:getSelection())
+command! -range=% -bar -nargs=* VimuxOpenRunner call VimuxOpenRunner()
+" vimux fzf handlers
+function! VimuxFzfPrompt()
+  let vCommands = ['VimuxClearRunnerHistory', 'VimuxCloseRunner', 'VimuxInspectRunner',
+    \'VimuxInterruptRunner', 'VimuxOpenRunner', 'VimuxPromptCommand', 'VimuxRunCommandInDir',
+    \'VimuxRunLastCommand', 'VimuxSendBuffer', 'VimuxSendLine', 'VimuxSendSelection',
+    \'VimuxZoomRunner']
+  call fzf#run(fzf#wrap({'source': vCommands, 'sink': function('execute')}), 1)
+endfunction
+" vimux mappings
+map <Leader>v, :call VimuxFzfPrompt()<CR>
+map <Leader>vp :VimuxPromptCommand<CR>
+map <Leader>vl :VimuxRunLastCommand<CR>
+map <Leader>vc :VimuxInterruptRunner<CR>
+map <Leader>vz :VimuxZoomRunner<CR>
 nnoremap <Leader>vs :VimuxSendLine<CR>
 vnoremap <Leader>vs :VimuxSendSelection<CR>
 
