@@ -30,8 +30,6 @@ Plug 'autozimu/LanguageClient-neovim', {
     \ 'do': 'bash install.sh',
     \ }
 call plug#end()
-let g:python2_host_prog = '/usr/local/bin/python'
-let g:python3_host_prog = '/usr/local/bin/python3'
 
 " General
 scriptencoding utf8
@@ -185,6 +183,27 @@ map <Leader>vl :VimuxRunLastCommand<CR>
 map <Leader>vi :VimuxInspectRunner<CR>
 map <Leader>vc :VimuxInterruptRunner<CR>
 map <Leader>vz :VimuxZoomRunner<CR>
+function! VimuxSendSelectionFn()
+  echom "Call VimuxGetSelection"
+  let reg_save = getreg('"')
+  let regtype_save = getregtype('"')
+  let cb_save = &clipboard
+  set clipboard&
+  silent normal! ""gvy
+  let selection = getreg('"')
+  " restore the selection, this only works if we don't change
+  " pane selection buffer
+  silent normal! gv
+  call setreg('"', reg_save, regtype_save)
+  let &clipboard = cb_save
+  " add escape codes for bracketed paste mode
+  let data = "\e[200~" . selection ."\e[201~\n"
+  call VimuxSendText(data)
+endfunction
+command! -range=% -bar -nargs=* VimuxSendLine call VimuxSendText(getline(".") . "\n")
+command! -range=% -bar -nargs=* VimuxSendSelection call VimuxSendSelectionFn()
+nnoremap <Leader>vs :VimuxSendLine<CR>
+vnoremap <Leader>vs :VimuxSendSelection<CR>
 
 
 " GitGutter setup
@@ -307,6 +326,7 @@ let g:ale_pattern_options = {
   \   '\.hpp$': {'ale_linters': {'cpp': ['clangd']}},
   \   '\.hxx$': {'ale_linters': {'cpp': ['clangd']}},
   \}
+let g:ale_python_mypy_options = '--ignore-missing-imports'
 
 " neoformat
 augroup fmt
