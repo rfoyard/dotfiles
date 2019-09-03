@@ -338,7 +338,7 @@ let g:ale_sign_column_always = 1
 nmap <silent> <leader>n <Plug>(ale_next_wrap)
 nmap <silent> <leader>p <Plug>(ale_previous_wrap)
 let g:ale_linters = {
-  \ 'python': ['flake8', 'mypy'],
+  \ 'python': ['mypy', 'pylint'],
   \ 'ocaml': ['merlin', 'ols'],
   \ 'go': ['gofmt', 'golint', 'govet'],
   \ 'javascript': ['eslint'],
