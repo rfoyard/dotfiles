@@ -335,6 +335,10 @@ let g:ale_set_loclist = 1
 let g:ale_set_quickfix = 0
 let g:ale_sign_column_always = 1
 " let g:ale_open_list = 1
+let g:ale_virtualtext_cursor= 1
+highlight link ALEVirtualTextError ALEErrorSign
+highlight link ALEVirtualTextWarning ALEWarningSign
+highlight link ALEVirtualTextInfo ALEInfoSign
 nmap <silent> <leader>n <Plug>(ale_next_wrap)
 nmap <silent> <leader>p <Plug>(ale_previous_wrap)
 let g:ale_linters = {
@@ -384,7 +388,7 @@ let g:LanguageClient_serverCommands = {
   \ 'ocaml': ['ocaml-language-server', '--stdio'],
   \ 'typescript': ['typescript-language-server', '--stdio'],
   \ 'typescript.tsx': ['typescript-language-server', '--stdio'],
-  \ 'go': ['bingo', '--mode', 'stdio', '--logfile', '/tmp/lsp-bingo.log', '-disable-func-snippet', '-enable-global-cache'],
+  \ 'go': ['bingo', '--mode', 'stdio', '--logfile', '/tmp/lsp-bingo.log', '-disable-func-snippet', '-cache-style', 'always'],
   \ 'cpp': ['clangd'],
   \}
 
@@ -395,8 +399,8 @@ au FileType go set softtabstop=4
 au FileType go set tabstop=4
 
 " ocaml
-if executable('opam')
-	let g:opamshare = substitute(system('opam config var share'),'\n$','','''')
-	execute "set rtp+=" . g:opamshare . "/merlin/vim"
-endif
+" if executable('opam')
+	" let g:opamshare = substitute(system('opam config var share'),'\n$','','''')
+	" execute "set rtp+=" . g:opamshare . "/merlin/vim"
+" endif
 
