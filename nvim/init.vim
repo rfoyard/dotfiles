@@ -344,7 +344,7 @@ nmap <silent> <leader>p <Plug>(ale_previous_wrap)
 let g:ale_linters = {
   \ 'python': ['mypy', 'pylint'],
   \ 'ocaml': ['merlin', 'ols'],
-  \ 'go': ['gofmt', 'golint', 'govet'],
+  \ 'go': ['gopls'],
   \ 'javascript': ['eslint'],
   \ 'typescript': ['tsserver', 'tslint'],
   \ 'typescript.tsx': ['tsserver', 'tslint'],
@@ -388,7 +388,7 @@ let g:LanguageClient_serverCommands = {
   \ 'ocaml': ['ocaml-language-server', '--stdio'],
   \ 'typescript': ['typescript-language-server', '--stdio'],
   \ 'typescript.tsx': ['typescript-language-server', '--stdio'],
-  \ 'go': ['bingo', '--mode', 'stdio', '--logfile', '/tmp/lsp-bingo.log', '-disable-func-snippet', '-cache-style', 'always'],
+  \ 'go': ['gopls'],
   \ 'cpp': ['clangd'],
   \}
 
