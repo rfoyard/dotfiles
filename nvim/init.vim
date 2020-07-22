@@ -29,6 +29,7 @@ Plug 'autozimu/LanguageClient-neovim', {
     \ 'branch': 'next',
     \ 'do': 'bash install.sh',
     \ }
+Plug 'jvirtanen/vim-hcl'
 call plug#end()
 
 " General
@@ -61,6 +62,10 @@ let g:mapleader="\<SPACE>"
 " partial command filter on command history
 cnoremap <C-k> <Up>
 cnoremap <C-j> <Down>
+" global copy/paste
+noremap gyy "+yy
+noremap gp "+p
+vnoremap gy "+y
 
 " display
 set updatetime=500
@@ -344,7 +349,7 @@ nmap <silent> <leader>p <Plug>(ale_previous_wrap)
 let g:ale_linters = {
   \ 'python': ['mypy', 'pylint'],
   \ 'ocaml': ['merlin', 'ols'],
-  \ 'go': ['gopls'],
+  \ 'go': ['gopls', 'golint'],
   \ 'javascript': ['eslint'],
   \ 'typescript': ['tsserver', 'tslint'],
   \ 'typescript.tsx': ['tsserver', 'tslint'],
@@ -370,6 +375,7 @@ let g:neoformat_enabled_typescript = ['prettier']
 let g:neoformat_enabled_ocaml = ['ocamlformat']
 let g:neoformat_enabled_cpp = ['clangformat']
 let g:neoformat_enabled_c = ['clangformat']
+let g:neoformat_enabled_terraform = ['terraform']
 
 " custom syntax
 au BufNewFile,BufRead *.md set ft=markdown
