@@ -29,7 +29,7 @@ Plug 'autozimu/LanguageClient-neovim', {
     \ 'branch': 'next',
     \ 'do': 'bash install.sh',
     \ }
-Plug 'jvirtanen/vim-hcl'
+Plug 'hashivim/vim-terraform'
 call plug#end()
 
 " General
