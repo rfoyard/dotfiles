@@ -94,7 +94,7 @@ set scrolloff=5
 set showcmd
 set textwidth=80
 set fillchars=vert:\│,eob:⌁
-set listchars=tab:\|\ ,trail:·,eol:¬,nbsp:_,space:·
+set listchars=tab:\|\ ,trail:·,eol:¬,nbsp:_
 set list
 hi clear IncSearch
 hi link IncSearch StatusLine
@@ -362,6 +362,7 @@ let g:ale_pattern_options = {
   \   '\.hxx$': {'ale_linters': {'cpp': ['clangd']}},
   \}
 let g:ale_python_mypy_options = '--ignore-missing-imports'
+"let g:ale_python_pylint_executable = 'python3 -m pylint'
 
 " neoformat
 augroup fmt
