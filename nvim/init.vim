@@ -1,7 +1,8 @@
 " Plugins
 call plug#begin('~/.vim/plugged')
-Plug 'sbdchd/neoformat'
+" Plug 'sbdchd/neoformat'
 Plug 'airblade/vim-gitgutter'
+Plug 'kshenoy/vim-signature'
 Plug 'easymotion/vim-easymotion'
 Plug 'ntpeters/vim-better-whitespace'
 Plug 'tpope/vim-fugitive'
@@ -23,6 +24,7 @@ Plug 'ncm2/ncm2'
 Plug 'ncm2/ncm2-bufword'
 Plug 'ncm2/ncm2-tmux'
 Plug 'ncm2/ncm2-path'
+Plug 'jiangmiao/auto-pairs'
 " languages
 Plug 'HerringtonDarkholme/yats.vim'
 Plug 'autozimu/LanguageClient-neovim', {
@@ -179,7 +181,7 @@ let g:startify_lists = [
 " \ { 'type': 'bookmarks', 'header': ['   Bookmarks']      },
 let g:startify_session_before_save = [
   \ 'echo "Cleaning up before saving.."',
-  \ 'silent! NERDTreeTabsClose'
+  \ 'silent! NERDTreeClose'
   \ ]
 
 " vimux functions & commands
@@ -218,7 +220,7 @@ endfunction
 command! -range=% -bar -nargs=* VimuxSendBuffer call VimuxSendText(s:getBuffer())
 command! -range=% -bar -nargs=* VimuxSendLine call VimuxSendText(getline(".") . "\n")
 command! -range=% -bar -nargs=* VimuxSendSelection call VimuxSendText(s:getSelection())
-command! -range=% -bar -nargs=* VimuxOpenRunner call VimuxOpenRunner()
+" command! -range=% -bar -nargs=* VimuxOpenRunner call VimuxOpenRunner()
 " vimux fzf handlers
 function! VimuxFzfPrompt()
   let vCommands = ['VimuxClearRunnerHistory', 'VimuxCloseRunner', 'VimuxInspectRunner',
@@ -283,6 +285,10 @@ nnoremap <Leader>o :NERDTreeToggle<CR>
 " fzf
 let g:fzf_buffers_jump = 1
 let g:fzf_command_prefix = 'Fz'
+let g:fzf_preview_window = []
+let g:fzf_layout = { 'window': { 'width': 0.9, 'height': 0.4, 'relative': v:true} }
+" let g:fzf_layout = { 'window': { 'width': 1, 'height': 0.4, 'relative': v:true, 'yoffset': 1.0} }
+" let g:fzf_layout = { 'down': '30%' }
 let g:LanguageClient_fzfOptions = '-m'
 nnoremap <Leader>, :FzBuffer<CR>
 nnoremap <Leader>; :FzFiles<CR>
@@ -297,7 +303,7 @@ let g:fzf_colors =
   \ 'bg+':     ['bg', 'CursorLine', 'CursorColumn'],
   \ 'hl+':     ['fg', 'Statement'],
   \ 'info':    ['fg', 'PreProc'],
-  \ 'border':  ['fg', 'Ignore'],
+  \ 'border':  ['fg', 'Normal'],
   \ 'prompt':  ['fg', 'Conditional'],
   \ 'pointer': ['fg', 'Exception'],
   \ 'marker':  ['fg', 'Keyword'],
@@ -334,6 +340,7 @@ let g:ale_sign_error = '⨉'
 let g:ale_sign_warning = '⚠'
 let g:ale_statusline_format = ['⨉ %d', '⚠ %d', '']
 let g:ale_lint_on_text_changed = 0
+let g:ale_fix_on_save = 1
 let g:ale_lint_on_save = 1
 let g:ale_lint_on_enter = 1
 let g:ale_set_loclist = 1
@@ -356,6 +363,17 @@ let g:ale_linters = {
   \ 'cpp': ['clangd'],
   \ 'c': ['clangd'],
   \ }
+let g:ale_fixers = {
+  \ 'python': ['yapf'],
+  \ 'ocaml': ['ocamlformat'],
+  \ 'go': ['goimports'],
+  \ 'javascript': ['prettier'],
+  \ 'typescript': ['prettier'],
+  \ 'typescript.tsx': ['prettier'],
+  \ 'cpp': ['clangd'],
+  \ 'c': ['clangd'],
+  \ 'terraform': ['terraform'],
+  \ }
 let g:ale_pattern_options = {
   \   '\.h$': {'ale_linters': {'cpp': ['clangd']}},
   \   '\.hpp$': {'ale_linters': {'cpp': ['clangd']}},
@@ -364,19 +382,21 @@ let g:ale_pattern_options = {
 let g:ale_python_mypy_options = '--ignore-missing-imports'
 "let g:ale_python_pylint_executable = 'python3 -m pylint'
 
+
 " neoformat
-augroup fmt
-  autocmd!
-  autocmd BufWritePre * try | undojoin | Neoformat | catch /^Vim\%((\a\+)\)\=:E790/ | endtry
-augroup END
-let g:neoformat_enabled_python = ['yapf']
-let g:neoformat_enabled_go = ['goimports', 'gofmt']
-let g:neoformat_enabled_javascript = ['prettier']
-let g:neoformat_enabled_typescript = ['prettier']
-let g:neoformat_enabled_ocaml = ['ocamlformat']
-let g:neoformat_enabled_cpp = ['clangformat']
-let g:neoformat_enabled_c = ['clangformat']
-let g:neoformat_enabled_terraform = ['terraform']
+" augroup fmt
+  " autocmd!
+  " autocmd BufWritePre * try | undojoin | Neoformat | catch /^Vim\%((\a\+)\)\=:E790/ | endtry
+" augroup END
+" let g:neoformat_enabled_python = ['yapf']
+" "let g:neoformat_enabled_go = ['goimports', 'gofmt']
+" let g:neoformat_enabled_go = []
+" let g:neoformat_enabled_javascript = ['prettier']
+" let g:neoformat_enabled_typescript = ['prettier']
+" let g:neoformat_enabled_ocaml = ['ocamlformat']
+" let g:neoformat_enabled_cpp = ['clangformat']
+" let g:neoformat_enabled_c = ['clangformat']
+" let g:neoformat_enabled_terraform = ['terraform']
 
 " custom syntax
 au BufNewFile,BufRead *.md set ft=markdown
