@@ -356,7 +356,7 @@ nmap <silent> <leader>p <Plug>(ale_previous_wrap)
 let g:ale_linters = {
   \ 'python': ['mypy', 'pylint'],
   \ 'ocaml': ['merlin', 'ols'],
-  \ 'go': ['gopls', 'golint'],
+  \ 'go': ['gopls', 'golint', 'golangci-lint'],
   \ 'javascript': ['eslint'],
   \ 'typescript': ['tsserver', 'tslint'],
   \ 'typescript.tsx': ['tsserver', 'tslint'],
@@ -412,7 +412,7 @@ nnoremap <silent> <Leader>nr :call LanguageClient#textDocument_references()<CR>
 let g:LanguageClient_diagnosticsEnable = 0
 let g:LanguageClient_serverCommands = {
   \ 'python': ['pyls'],
-  \ 'ocaml': ['ocaml-language-server', '--stdio'],
+  \ 'ocaml': ['ocamllsp'],
   \ 'typescript': ['typescript-language-server', '--stdio'],
   \ 'typescript.tsx': ['typescript-language-server', '--stdio'],
   \ 'go': ['gopls'],
