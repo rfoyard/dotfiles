@@ -6,6 +6,7 @@ Plug 'kshenoy/vim-signature'
 Plug 'easymotion/vim-easymotion'
 Plug 'ntpeters/vim-better-whitespace'
 Plug 'tpope/vim-fugitive', { 'tag': 'v3.6' }
+Plug 'tpope/vim-unimpaired'
 Plug 'majutsushi/tagbar'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
@@ -326,6 +327,15 @@ command! -bang FzBCommits call fzf#vim#buffer_commits({'options': '--no-preview'
 
 " fugitive
 nnoremap <leader>gg :<C-u>Gstatus<CR>
+nnoremap <leader>gh :<C-u>0Gclog<CR>
+
+" unimpaired
+nmap < [
+nmap > ]
+omap < [
+omap > ]
+xmap < [
+xmap > ]
 
 " enter insert mode in terminal (useful for fugitive)
 augroup nvim_term
