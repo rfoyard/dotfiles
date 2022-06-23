@@ -61,6 +61,7 @@ set noeol
 set cursorline
 set inccommand=split
 set pastetoggle=<F2>
+set laststatus=3 " global statusline
 let g:mapleader="\<SPACE>"
 " partial command filter on command history
 cnoremap <C-k> <Up>
@@ -365,7 +366,7 @@ nmap <silent> <leader>n <Plug>(ale_next_wrap)
 nmap <silent> <leader>p <Plug>(ale_previous_wrap)
 let g:ale_linters = {
   \ 'python': ['mypy', 'pylint'],
-  \ 'ocaml': ['merlin', 'ols'],
+  \ 'ocaml': ['ocamllsp'],
   \ 'go': ['gopls', 'golint', 'golangci-lint'],
   \ 'javascript': ['eslint'],
   \ 'typescript': ['tsserver', 'tslint'],
