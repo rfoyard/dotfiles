@@ -25,7 +25,6 @@ Plug 'ncm2/ncm2'
 Plug 'ncm2/ncm2-bufword'
 Plug 'ncm2/ncm2-tmux'
 Plug 'ncm2/ncm2-path'
-Plug 'jiangmiao/auto-pairs'
 " languages
 Plug 'HerringtonDarkholme/yats.vim'
 Plug 'autozimu/LanguageClient-neovim', {
@@ -33,6 +32,7 @@ Plug 'autozimu/LanguageClient-neovim', {
     \ 'do': 'bash install.sh',
     \ }
 Plug 'hashivim/vim-terraform'
+Plug 'olimorris/onedarkpro.nvim'
 call plug#end()
 
 " General
@@ -70,6 +70,9 @@ cnoremap <C-j> <Down>
 noremap gyy "+yy
 noremap gp "+p
 vnoremap gy "+y
+
+" Yank to system clipboard
+set clipboard=unnamed
 
 " display
 set updatetime=500
@@ -327,16 +330,16 @@ command! -bang FzCommits call fzf#vim#commits({'options': '--no-preview'}, <bang
 command! -bang FzBCommits call fzf#vim#buffer_commits({'options': '--no-preview'}, <bang>0)
 
 " fugitive
-nnoremap <leader>gg :<C-u>Gstatus<CR>
+nnoremap <leader>gg :<C-u>Git<CR>
 nnoremap <leader>gh :<C-u>0Gclog<CR>
 
 " unimpaired
-nmap < [
-nmap > ]
-omap < [
-omap > ]
-xmap < [
-xmap > ]
+"nmap < [
+"nmap > ]
+"omap < [
+"omap > ]
+"xmap < [
+"xmap > ]
 
 " enter insert mode in terminal (useful for fugitive)
 augroup nvim_term
@@ -367,12 +370,13 @@ nmap <silent> <leader>p <Plug>(ale_previous_wrap)
 let g:ale_linters = {
   \ 'python': ['mypy', 'pylint'],
   \ 'ocaml': ['ocamllsp'],
-  \ 'go': ['gopls', 'golint', 'golangci-lint'],
+  \ 'go': ['gopls', 'golint'],
   \ 'javascript': ['eslint'],
   \ 'typescript': ['tsserver', 'tslint'],
   \ 'typescript.tsx': ['tsserver', 'tslint'],
   \ 'cpp': ['clangd'],
   \ 'c': ['clangd'],
+  \ 'rust': ['analyzer'],
   \ }
 let g:ale_fixers = {
   \ 'python': ['yapf'],
@@ -381,9 +385,10 @@ let g:ale_fixers = {
   \ 'javascript': ['prettier'],
   \ 'typescript': ['prettier'],
   \ 'typescript.tsx': ['prettier'],
-  \ 'cpp': ['clangd'],
-  \ 'c': ['clangd'],
+  \ 'cpp': ['clangtidy'],
+  \ 'c': ['clangtidy'],
   \ 'terraform': ['terraform'],
+  \ 'rust': ['rustfmt'],
   \ }
 let g:ale_pattern_options = {
   \   '\.h$': {'ale_linters': {'cpp': ['clangd']}},
@@ -420,6 +425,7 @@ nnoremap <silent> <Leader>n, :call LanguageClient_contextMenu()<CR>
 nnoremap <silent> <Leader>nh :call LanguageClient#textDocument_hover()<CR>
 nnoremap <silent> <Leader>nd :call LanguageClient#textDocument_definition()<CR>
 nnoremap <silent> <Leader>nr :call LanguageClient#textDocument_references()<CR>
+nnoremap <silent> <Leader>ni :call LanguageClient#textDocument_implementation()<CR>
 let g:LanguageClient_diagnosticsEnable = 0
 let g:LanguageClient_serverCommands = {
   \ 'python': ['pyls'],
@@ -428,6 +434,7 @@ let g:LanguageClient_serverCommands = {
   \ 'typescript.tsx': ['typescript-language-server', '--stdio'],
   \ 'go': ['gopls'],
   \ 'cpp': ['clangd'],
+  \ 'rust': ['rust-analyzer'],
   \}
 
 " golang
@@ -441,4 +448,7 @@ au FileType go set tabstop=4
 	" let g:opamshare = substitute(system('opam config var share'),'\n$','','''')
 	" execute "set rtp+=" . g:opamshare . "/merlin/vim"
 " endif
+
+" hurl
+autocmd BufRead,BufNewFile *.hurl set filetype=hurl
 
