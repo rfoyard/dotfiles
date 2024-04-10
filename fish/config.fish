@@ -1,6 +1,6 @@
 alias v="nvim"
 alias vim="nvim"
-alias rmi="rm -i"
+alias rm="rm -i"
 alias ls="eza"
 alias ll="eza -lg"
 alias la="eza -lag"
