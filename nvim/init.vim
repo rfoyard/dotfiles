@@ -71,9 +71,6 @@ noremap gyy "+yy
 noremap gp "+p
 vnoremap gy "+y
 
-" Yank to system clipboard
-set clipboard=unnamed
-
 " display
 set updatetime=500
 if exists('+termguicolors')
