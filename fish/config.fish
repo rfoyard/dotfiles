@@ -1,11 +1,12 @@
 alias v="nvim"
 alias vim="nvim"
+alias cp="cp -i"
 alias rm="rm -i"
 alias mv="mv -i"
-alias ls="eza"
-alias ll="eza -lg"
-alias la="eza -lag"
-alias tree="eza --tree"
+alias ls="eza --icons --git"
+alias ll="eza -lg --icons --git"
+alias la="eza -lag --icons --git"
+alias tree="eza --tree --icons --git"
 alias top="htop"
 
 alias gl="git log --graph --decorate --pretty=format:'%Cred%h%Creset - %Cgreen(%cr)%Creset %s - %C(blue)%an%Creset %C(yellow)%d%Creset' --abbrev-commit --all"
@@ -23,13 +24,10 @@ set -gx EDITOR nvim
 set -gx GIT_EDITOR nvim
 set -g -x CDPATH "$HOME/Development/clients"
 set -gx GOPATH "$HOME/Development/sdks/go"
-set -gx GOPRIVATE "github.com/toggleglobal/*"
 set -gx LIMA_HOME "$HOME/Library/Application Support/Lima"
 
 # 1password environment
-set -gx OP_ACCOUNT "togglesoftwareservicesuk"
-set -gx OPENAPI_KEY "op://Private/OpenAI/credential"
-set -gx ANTHROPIC_API_KEY "op://Private/Anthropic/credential"
+set -gx OP_ACCOUNT "my.1password.com"
 
 # homebrew environment
 eval "$(/opt/homebrew/bin/brew shellenv)"
