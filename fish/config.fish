@@ -8,6 +8,7 @@ alias ll="eza -lg --icons --git"
 alias la="eza -lag --icons --git"
 alias tree="eza --tree --icons --git"
 alias top="htop"
+alias k="kubectl"
 
 alias gl="git log --graph --decorate --pretty=format:'%Cred%h%Creset - %Cgreen(%cr)%Creset %s - %C(blue)%an%Creset %C(yellow)%d%Creset' --abbrev-commit --all"
 alias kafka-console-producer.sh="kafka-console-producer.sh --producer-property partitioner.class=org.apache.kafka.clients.producer.RoundRobinPartitioner"
