@@ -32,6 +32,7 @@ Plug 'autozimu/LanguageClient-neovim', {
     \ 'do': 'bash install.sh',
     \ }
 Plug 'hashivim/vim-terraform'
+Plug 'towolf/vim-helm'
 Plug 'olimorris/onedarkpro.nvim'
 call plug#end()
 
@@ -432,6 +433,7 @@ let g:LanguageClient_serverCommands = {
   \ 'go': ['gopls'],
   \ 'cpp': ['clangd'],
   \ 'rust': ['rust-analyzer'],
+  \ 'kcl': ['kcl-language-server'],
   \}
 
 " golang
