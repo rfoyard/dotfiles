@@ -8,3 +8,6 @@ opt.clipboard = ""
 -- vim.g.root_spec = { "lsp", { ".git", "lua" }, "cwd" }
 -- disable root detection set to just "cwd"
 vim.g.root_spec = { "cwd" }
+
+vim.g.mapleader = " "
+vim.g.maplocalleader = "@"
