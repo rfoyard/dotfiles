@@ -22,7 +22,6 @@ set -g fish_key_bindings fish_vi_key_bindings
 bind -M insert \ew nextd-or-forward-word
 
 # environment variables
-set -gx NVIM_APPNAME nvim-lazy
 set -gx EDITOR nvim
 set -gx GIT_EDITOR nvim
 set -g -x CDPATH "$HOME/Development/clients"
