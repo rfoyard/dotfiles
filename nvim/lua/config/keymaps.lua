@@ -2,7 +2,5 @@
 -- Default keymaps that are always set: https://github.com/LazyVim/LazyVim/blob/main/lua/lazyvim/config/keymaps.lua
 -- Add any additional keymaps here
 
--- local map = vim.keymap.set
-
--- global yanking
--- map({ "n", "x" }, "<leader>p", '"+p', { desc = "Paste from clipboard" })
+-- make sure all <C-w> window commands work in terminal mode
+vim.keymap.set("t", "<C-w>", [[<C-\><C-n><C-w>]], { noremap = true })
