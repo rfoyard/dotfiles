@@ -11,3 +11,6 @@ vim.g.root_spec = { "cwd" }
 
 vim.g.mapleader = " "
 vim.g.maplocalleader = "@"
+
+-- use intelephense instead of phpactor
+vim.g.lazyvim_php_lsp = "intelephense"
