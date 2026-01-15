@@ -7,7 +7,7 @@ return {
       intelephense = {
         init_options = {
           globalStoragePath = vim.fn.expand("~/.config/intelephense"),
-          licenceKey = nil,
+          licenceKey = vim.fn.expand("~/.config/intelephense/licence.key"),
           clearCache = true,
         },
       },
