@@ -37,4 +37,8 @@ return {
       },
     },
   },
+  keys = {
+    -- replace the default buffers picker keymap to hide the current buffer
+    {"<leader>,", function() Snacks.picker.buffers({ current = false }) end, desc = "Buffers" },
+  },
 }

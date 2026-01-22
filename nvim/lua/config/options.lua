@@ -14,3 +14,11 @@ vim.g.maplocalleader = "@"
 
 -- use intelephense instead of phpactor
 vim.g.lazyvim_php_lsp = "intelephense"
+
+-- make sure the selected line is visible in snacks' picker
+vim.api.nvim_create_autocmd("ColorScheme", {
+  pattern = "*",
+  callback = function()
+    vim.api.nvim_set_hl(0, "SnacksPickerListCursorLine", { bg = "#3b4261" })
+  end,
+})
