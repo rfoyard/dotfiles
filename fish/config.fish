@@ -10,6 +10,7 @@ alias tree="eza --tree --icons --git"
 alias top="htop"
 alias k="kubectl"
 alias cat='bat --paging never --theme Nord --style plain'
+alias oc="opencode --port"
 
 alias gl="git log --graph --decorate --pretty=format:'%Cred%h%Creset - %Cgreen(%cr)%Creset %s - %C(blue)%an%Creset %C(yellow)%d%Creset' --abbrev-commit --all"
 

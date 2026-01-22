@@ -8,7 +8,7 @@ function _tide_item_kubectl
             set color red
         end
         tide_kubectl_color=$color _tide_print_item kubectl $tide_kubectl_icon' ' (string replace -r '/(|default)$' '' $cluster)
-    else
+    else if string match -v k3d-local $context
         _tide_print_item kubectl $tide_kubectl_icon' ' (string replace -r '/(|default)$' '' $context)
     end
 end
